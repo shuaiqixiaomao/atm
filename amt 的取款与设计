@@ -1,0 +1,434 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+struct user
+{
+	int zh;
+	float qian;
+	int zhuangtai;
+	char mima[100];
+	char xingmin[10];
+};
+void print(user *vip)
+{
+printf("账号:%d\n",vip->zh);
+printf("姓名%s\n",vip->xingmin);
+printf("存款:%.2f\n",vip->qian);
+}
+
+void print1()
+{
+	printf("请选择您的操作\n");
+	printf("=============================================\n");
+	printf("   1.注册  2.存款  3.取款  4.查询  5.转账\n   6.挂失  7.解挂  8.消除  9.改密  10.退出\n");
+	printf("=============================================\n");
+	printf("请选择相应菜单项\n");
+}
+
+int look(int x,user *vip,int *i)
+{
+	for(int j=0;j<=*i;j++)
+	{
+		if(x==(vip+j)->zh)
+			return j;
+	}
+	return -1;
+}
+
+void zhuche(user *vip,int *i)
+{
+	printf("正在注册。。。。\n");
+	printf("请设置一个五位数的账户\n");
+	scanf("%d",&(vip+*i)->zh);
+	int x=look((vip+*i)->zh,vip,i);
+
+	if(x<*i&&i!=0)
+	{
+		printf("账号已存在\n");
+	}
+	else
+	{
+		(vip+*i)->zhuangtai=0;
+		(vip+*i)->qian=0;
+		printf("请输入用户姓名\n");
+		scanf("%s",(vip+*i)->xingmin);
+		printf("请设置一个六位数密码\n");
+		scanf("%s",(vip+*i)->mima);
+		printf("注册成功\n");
+		(*i)++;
+	}
+
+}
+void chunkuan(user *vip,int *i)
+{
+	int a;
+	char ch[6];
+	printf("请输入账号\n");
+	scanf("%d",&a);
+	int j=look(a,vip,i);
+	if(j==-1)
+	{
+		printf("账号不存在\n");
+	}
+	else{
+		printf("请输入密码\n");
+		scanf("%s",ch);
+		if(strcmp(ch,(vip+j)->mima)==0)
+		{
+			if((vip+j)->zhuangtai==0)
+			{
+				int x;
+				printf("请输入存款金额\n");
+				scanf("%d",&x);
+				(vip+j)->qian+=x;
+				print((vip+j));
+			}
+			else
+			{
+				printf("该号已挂失\n");
+			}
+
+		}
+		else
+		{
+			printf("密码输入错误\n");
+		}
+	}
+}
+void zhuanzhang(user *vip,int *i)
+{
+	int a;
+	char ch[6];
+	printf("请输入账号\n");
+	scanf("%d",&a);
+	int j=look(a,vip,i);
+	if(j==-1)
+	{
+		printf("账号不存在\n");
+	}
+	else{
+		printf("请输入密码\n");
+		scanf("%s",ch);
+		if(strcmp(ch,(vip+j)->mima)==0)
+		{
+			if((vip+j)->zhuangtai==0)
+			{
+				int x,a1;
+				float y;
+				printf("请输入转账账号\n");
+				scanf("%d",&x);
+				printf("请输入转账金额\n");
+				scanf("%f",&y);
+				a1=look(x,vip,i);
+				if(y<=(vip+j)->qian)
+				{
+				(vip+j)->qian-=y;
+				(vip+a1)->qian+=y;
+				print(vip+j);
+				}
+				else
+				{
+				printf("余额不足\n");
+				}
+			}
+			else
+			{
+				printf("该号已挂失\n");
+			}
+
+		}
+		else
+		{
+			printf("密码输入错误\n");
+		}
+	}
+}
+
+void found(user *vip,int *i)
+{
+	int a;
+	char ch[6];
+	printf("请输入账号\n");
+	scanf("%d",&a);
+	int j=look(a,vip,i);
+	if(j==-1)
+	{
+		printf("账号不存在\n");
+	}
+	else{
+		printf("请输入密码\n");
+		scanf("%s",ch);
+		if(strcmp(ch,(vip+j)->mima)==0)
+		{
+			if((vip+j)->zhuangtai==0)
+			{
+
+			print((vip+j));
+
+			}
+			else
+			{
+				printf("该号已挂失\n");
+			}
+
+		}
+		else
+		{
+			printf("密码输入错误\n");
+		}
+	}
+}
+void qukuan(user *vip,int *i)
+{
+	int a;
+	char ch[6];
+	printf("请输入账号\n");
+	scanf("%d",&a);
+	int j=look(a,vip,i);
+	if(j==-1)
+	{
+		printf("账号不存在\n");
+	}
+	else{
+		printf("请输入密码\n");
+		scanf("%s",ch);
+		if(strcmp(ch,(vip+j)->mima)==0)
+		{
+			if((vip+j)->zhuangtai==0)
+			{
+				float x;
+				printf("请输入取款金额\n");
+				scanf("%f",&x);
+				(vip+j)->qian-=x;
+				print((vip+j));
+			}
+			else
+			{
+				printf("该号已挂失\n");
+			}
+
+		}
+		else
+		{
+			printf("密码输入错误\n");
+		}
+	}
+}
+void guashi(user *vip,int *i)
+{
+	int a;
+	char ch[6];
+	printf("请输入账号\n");
+	scanf("%d",&a);
+	int j=look(a,vip,i);
+	if(j==-1)
+	{
+		printf("账号不存在\n");
+	}
+	else{
+		printf("请输入密码\n");
+		scanf("%s",ch);
+		if(strcmp(ch,(vip+j)->mima)==0)
+		{
+			if((vip+j)->zhuangtai==0)
+			{
+				(vip+j)->zhuangtai=1;
+				printf("挂失成功\n");
+			}
+			else
+			{
+				printf("该号已挂失\n");
+			}
+
+		}
+		else
+		{
+			printf("密码输入错误\n");
+		}
+	}
+
+}
+void jeigua(user *vip,int *i)
+{
+	int a;
+	char ch[6];
+	printf("请输入账号\n");
+	scanf("%d",&a);
+	int j=look(a,vip,i);
+	if(j==-1)
+	{
+		printf("账号不存在\n");
+	}
+	else{
+		printf("请输入密码\n");
+		scanf("%s",ch);
+		if(strcmp(ch,(vip+j)->mima)==0)
+		{
+			if((vip+j)->zhuangtai!=0)
+			{
+				(vip+j)->zhuangtai=0;
+				printf("解挂成功\n");
+			}
+			else
+			{
+				printf("该号未挂失\n");
+			}
+
+		}
+		else
+		{
+			printf("密码输入错误\n");
+		}
+	}
+}
+void xiaohu(user *vip,int *i)
+{
+	int a;
+	char ch[6];
+	printf("请输入账号\n");
+	scanf("%d",&a);
+	int j=look(a,vip,i);
+	if(j==-1)
+	{
+		printf("账号不存在\n");
+	}
+	else
+	{
+		printf("请输入密码\n");
+		scanf("%s",ch);
+		if(strcmp(ch,(vip+j)->mima)==0)
+		{
+			if((vip+j)->zhuangtai==0)
+			{
+				(vip+j)->zhuangtai=-1;
+				printf("销户成功\n");
+			}
+			else
+			{
+				printf("该号已挂失\n");
+			}
+
+		}
+		else
+		{
+			printf("密码输入错误\n");
+		}
+	}
+}
+void gaimi(user *vip,int *i)
+{
+	int a;
+	char ch[6];
+	printf("请输入账号\n");
+	scanf("%d",&a);
+	int j=look(a,vip,i);
+	if(j==-1)
+	{
+		printf("账号不存在\n");
+	}
+	else
+	{
+		printf("请输入密码\n");
+		scanf("%s",ch);
+		if(strcmp(ch,(vip+j)->mima)==0)
+		{
+			if((vip+j)->zhuangtai==0)
+			{
+				printf("请输入新密码\n");
+				scanf("%s",(vip+j)->mima);
+				printf("改密成功\n");
+			}
+			else
+			{
+				printf("该号已挂失\n");
+			}
+
+		}
+		else
+		{
+			printf("密码输入错误\n");
+		}
+	}
+}
+
+int xuanze(int a,user *vip,int *i)
+{
+	switch (a)
+	{
+	case 1:
+		zhuche(vip,i);
+		return 0;
+		break;
+	case 2:
+		chunkuan(vip,i);
+		return 0;
+		break;
+	case 3:
+		qukuan(vip,i);
+		return 0;
+		break;
+	case 4:
+		found(vip,i);
+		return 0;
+		break;
+	case 5:
+		zhuanzhang(vip,i);
+		return 0;
+		break;
+	case 6:
+		guashi(vip,i);
+		return 0;
+		break;
+	case 7:
+		jeigua(vip,i);
+		return 0;
+		break;
+	case 8:
+		xiaohu(vip,i);
+		return 0;
+		break;
+	case 9:
+		gaimi(vip,i);
+		return 0;
+		break;
+	case 10:
+		printf("退出成功\n");
+		return 1;
+		break;
+	default:
+		printf("无该选项\n");
+		return 0;
+	}
+}
+int main()
+{
+	int a;
+	int b=sizeof(user);
+	int i=0;
+	user vip[1000];
+	
+	       do
+			{
+				print1();
+				scanf("%d", &a);
+				if(xuanze(a,vip,&i)==1)
+					break;
+
+			}while(1);
+
+
+
+
+	FILE *fp=fopen("c\\李春辉->text","w");
+	if(fp==NULL)
+	{
+		printf("无法打开文件\n");
+		exit(1);
+	}
+
+	fwrite(vip,b,i,fp);
+	fclose(fp);
+
+	return 0;
+}
